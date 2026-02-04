@@ -27,14 +27,13 @@
   # Hardware acceleration for video
   hardware.opengl = {
     enable = true;
-    driSupport = true;
     driSupport32Bit = true;
   };
 
   # Ollama service configuration
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     
     # Bind to all interfaces on port 11434
     host = "0.0.0.0";
