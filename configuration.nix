@@ -9,7 +9,7 @@
 
   hardware.nvidia = {
     # Enable NVIDIA support
-    package = config.boot.kernelPackages.nvidia_production;
+    modesetting.enable = true;
     
     # Use open-source drivers (recommended for RTX 40 series)
     open = true;
@@ -17,12 +17,6 @@
     # GPU power management
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    
-    # NVIDIA persistence daemon
-    nvidiaPersistenceD = true;
-    
-    # Optimus support (if laptop with integrated GPU)
-    optimus_prime.enable = false;
   };
 
   # CUDA support for Ollama
