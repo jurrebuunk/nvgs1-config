@@ -1,0 +1,78 @@
+{ config, pkgs, ... }:
+
+{
+  # System configuration
+  system.stateVersion = "24.05";
+
+  # Enable NVIDIA drivers for RTX 4060
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    # Enable NVIDIA support
+    package = config.boot.kernelPackages.nvidia_production;
+    
+    # Use open-source drivers (recommended for RTX 40 series)
+    open = true;
+    
+    # Enable CUDA support
+    cuda.enable = true;
+    
+    # GPU power management
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+    
+    # NVIDIA persistence daemon
+    nvidiaPersistenceD = true;
+    
+    # Optimus support (if laptop with integrated GPU)
+    optimus_prime.enable = false;
+  };
+
+  # Hardware acceleration for video
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  # Ollama service configuration
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    
+    # Bind to all interfaces on port 11434
+    host = "0.0.0.0";
+    port = 11434;
+    
+    # Optional: Environment variables
+    environmentVariables = {
+      OLLAMA_MODELS = "/var/lib/ollama/models";
+      CUDA_VISIBLE_DEVICES = "0";
+    };
+  };
+
+  # Allow Ollama to be accessed from network
+  networking.firewall.allowedTCPPorts = [ 11434 ];
+
+  # System packages
+  environment.systemPackages = with pkgs; [
+    nvidia-utils
+    cuda-runtime
+    cudnn
+    ollama
+  ];
+
+  # Enable necessary services
+  services.openssh.enable = true;
+
+  # Bootloader (adjust based on your system)
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Networking
+  networking.useDHCP = true;
+
+  # Locale and timezone
+  time.timeZone = "UTC";
+  i18n.defaultLocale = "en_US.UTF-8";
+}
