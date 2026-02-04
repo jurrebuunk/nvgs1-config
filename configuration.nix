@@ -24,13 +24,13 @@
 
   # CUDA support for Ollama
   environment.variables = {
-    CUDA_PATH = "${pkgs.cudatoolkit}";
+    CUDA_PATH = "${pkgs.cuda_runtime}";
   };
 
   # Hardware acceleration for video
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   # Ollama service configuration
@@ -54,9 +54,7 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    nvidia-utils
-    cuda-runtime
-    cudnn
+    cuda_runtime
     ollama
   ];
 
