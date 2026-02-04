@@ -24,8 +24,14 @@
 
   # CUDA support for Ollama
   environment.variables = {
-    CUDA_PATH = "${pkgs.cuda_runtime}";
+    CUDA_PATH = "${pkgs.cuda}";
   };
+
+  # System packages
+  environment.systemPackages = with pkgs; [
+    cuda
+    ollama
+  ];
 
   # Hardware acceleration for video
   hardware.graphics = {
@@ -51,12 +57,6 @@
 
   # Allow Ollama to be accessed from network
   networking.firewall.allowedTCPPorts = [ 11434 ];
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    cuda_runtime
-    ollama
-  ];
 
   # Enable necessary services
   services.openssh.enable = true;
