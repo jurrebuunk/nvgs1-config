@@ -29,7 +29,6 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
-    cuda
     ollama
   ];
 
