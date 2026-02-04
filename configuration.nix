@@ -22,11 +22,6 @@
     powerManagement.finegrained = false;
   };
 
-  # CUDA support for Ollama
-  environment.variables = {
-    CUDA_PATH = "${pkgs.cuda}";
-  };
-
   # System packages
   environment.systemPackages = with pkgs; [
     ollama
