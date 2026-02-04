@@ -14,9 +14,6 @@
     # Use open-source drivers (recommended for RTX 40 series)
     open = true;
     
-    # Enable CUDA support
-    cuda.enable = true;
-    
     # GPU power management
     powerManagement.enable = true;
     powerManagement.finegrained = false;
@@ -26,6 +23,11 @@
     
     # Optimus support (if laptop with integrated GPU)
     optimus_prime.enable = false;
+  };
+
+  # CUDA support for Ollama
+  environment.variables = {
+    CUDA_PATH = "${pkgs.cudatoolkit}";
   };
 
   # Hardware acceleration for video
