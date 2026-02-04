@@ -4,6 +4,9 @@
   # System configuration
   system.stateVersion = "24.05";
 
+  # Allow unfree packages (NVIDIA drivers)
+  nixpkgs.config.allowUnfree = true;
+
   # Enable NVIDIA drivers for RTX 4060
   services.xserver.videoDrivers = [ "nvidia" ];
 
